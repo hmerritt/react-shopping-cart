@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Route } from "react-router-dom";
 import data from "./data";
+import { indexOf } from "lodash";
 
 //  Contexts
 import { ProductContext } from "./contexts/ProductContext";
@@ -16,7 +17,9 @@ function App() {
     const [cart, setCart] = useState([]);
 
     const addItem = item => {
-        setCart([...cart, item]);
+		if (indexOf(cart, item) === -1) {
+        	setCart([...cart, item]);
+		}
     };
 
 	const removeItem = itemId => {
