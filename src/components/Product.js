@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
-import { indexOf } from "lodash";
+import { findIndex } from "lodash";
 
 const Product = props => {
 
 	const { cart } = useContext(CartContext);
+
+	//  Check if item is in the cart
+	const inCart = findIndex(cart, { id: props.product.id }) !== -1;
 
     return (
         <div className="product">
@@ -19,14 +22,7 @@ const Product = props => {
 
             <button onClick={() => props.addItem(props.product)}>
                 {
-					(() => {
-						if (indexOf(cart, props.product) === -1) {
-							return "Add to cart";
-						}
-						else {
-							return "Added to cart";
-						}
-					})()
+					inCart ? "Added to cart" : "Add to cart"
 				}
             </button>
         </div>

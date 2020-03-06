@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Route } from "react-router-dom";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 import data from "./data";
-import { indexOf } from "lodash";
+import { findIndex } from "lodash";
 
 //  Contexts
 import { ProductContext } from "./contexts/ProductContext";
@@ -14,10 +15,11 @@ import ShoppingCart from "./components/ShoppingCart";
 
 function App() {
     const [products] = useState(data);
-    const [cart, setCart] = useState([]);
+	//const [cart, setCart] = useState([]);
+    const [cart, setCart] = useLocalStorage("shoppingCart", []);
 
     const addItem = item => {
-		if (indexOf(cart, item) === -1) {
+		if (findIndex(cart, { id: item.id }) === -1) {
         	setCart([...cart, item]);
 		}
     };
